@@ -1,14 +1,28 @@
 pipeline {
     agent any
     stages {
-        stage('Build') {
-            steps {
-                sh 'echo "Hello World"'
-                sh '''
-                    echo "Multiline shell steps works too"
-                    ls -lah
-                '''
+        stage('No-op'){
+            steps{
+                sh 'ls'
             }
+        }
+    }
+    post {
+        always {
+            echo "one way or another , I have finished"
+            deleteDir()
+        }
+        success {
+            echo 'I succeeded!'
+        }
+        unstable {
+            echo 'I am unstable :/'
+        }
+        failure {
+            echo 'I failed :<'
+        }
+        changed {
+            echo 'things were changed......'
         }
     }
 }
