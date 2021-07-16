@@ -1,28 +1,10 @@
 pipeline {
-    agent any
+    agent { docker { image 'maven:3.3.3' } }
     stages {
-        stage('No-op'){
-            steps{
-                sh 'ls'
+        stage('build') {
+            steps {
+                sh 'mvn --version'
             }
-        }
-    }
-    post {
-        always {
-            echo "one way or another , I have finished"
-            deleteDir()
-        }
-        success {
-            echo 'I succeeded!'
-        }
-        unstable {
-            echo 'I am unstable :/'
-        }
-        failure {
-            echo 'I failed :<'
-        }
-        changed {
-            echo 'things were changed......'
         }
     }
 }
